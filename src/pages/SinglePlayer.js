@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Image, Segment } from "semantic-ui-react";
+import CalcWin from "../components/CalcWin";
 import { CenterDiv, FlexDiv } from "../components/Styles";
 import paper from "../images/Paper.jpg";
 import rock from "../images/Rock.png";
@@ -49,86 +50,6 @@ const SinglePlayer = () => {
         setCalculating(true);
     };
 
-    const calculateWin = () => {
-        let winner = "";
-        let result = null;
-        console.log(selection);
-        console.log(compChoice);
-        if (selection === compChoice) {
-            result = "tie";
-        } else {
-            // handle wins and losses
-            if (selection === "rock" && compChoice === "scissors") {
-                result = "win";
-                winner = player.name;
-                player.wins++;
-            } else if (selection === "paper" && compChoice === "rock") {
-                result = "win";
-                winner = player.name;
-                player.wins++;
-            } else if (selection === "scissors" && compChoice === "paper") {
-                result = "win";
-                winner = player.name;
-                player.wins++;
-            } else {
-                result = "loss";
-                winner = computer.name;
-                computer.wins++;
-            }
-        }
-
-        if (result === "tie") {
-            // return <h1>It's a tie!</h1>
-            setWinState("It's a tie!");
-        } else {
-            setWinState(`${winner} wins!`);
-        }
-    }
-
-    const calc = () => {
-        setCalculating(false);
-        return calculateWin();
-    }
-
-    // This is the original way i did it
-
-    // const calculateWin = () => {
-    //     let winner = "";
-    //     let result = null;
-    //     if (selection === compChoice) {
-    //         result = "tie";
-    //     } else {
-    //         // handle wins and losses
-    //         if (selection === "rock" && compChoice === "scissors") {
-    //             result = "win";
-    //             winner = player.name;
-    //             player.wins++;
-    //         } else if (selection === "paper" && compChoice === "rock") {
-    //             result = "win";
-    //             winner = player.name;
-    //             player.wins++;
-    //         } else if (selection === "scissors" && compChoice === "paper") {
-    //             result = "win";
-    //             winner = player.name;
-    //             player.wins++;
-    //         } else {
-    //             result = "loss";
-    //             winner = computer.name;
-    //             computer.wins++;
-    //         }
-    //     }
-
-    //     if (result === "tie") {
-    //         return <h1>It's a tie!</h1>
-    //     } else {
-    //         return (
-    //             <div>
-    //                 <h1>{winner} wins!</h1>
-    //             </div>
-    //         )
-    //     }
-    // }
-
     const reset = () => {
         setCompChoice(null);
         setSelection(null);
@@ -158,7 +79,7 @@ const SinglePlayer = () => {
                         <Image src={scissors} size="small" circular onClick={()=>makeChoice(3)} />
                     </FlexDiv> 
                     </>}
-                    {calculating && calc()}
+                    {calculating && <CalcWin selection={selection} compChoice={compChoice} player={player} computer={computer} setWinState={setWinState} setCalculating={setCalculating} />}
                     {selection && compChoice && 
                     <div>
                         <h3>{player.name} - {selection}</h3>
