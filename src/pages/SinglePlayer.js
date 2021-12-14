@@ -46,6 +46,26 @@ const SinglePlayer = () => {
         }
     };
 
+    const calculateWin = () => {
+        let winner = "";
+        let result = null;
+        if (selection === compChoice) {
+            result = "tie";
+        } else {
+            // handle wins and losses
+        }
+
+        if (result === "tie") {
+            return <h1>It's a tie!</h1>
+        } else {
+            return (
+                <div>
+                    <h1>{winner} wins!</h1>
+                </div>
+            )
+        }
+    }
+
     const reset = () => {
         setCompChoice(null);
         setSelection(null);
@@ -79,9 +99,9 @@ const SinglePlayer = () => {
                     <div>
                         <h3>{player.name} - {selection}</h3>
                         <h3>{computer.name} - {compChoice}</h3>
+                        {calculateWin()}
                         <Button onClick={reset}>Go again</Button>
-                    </div>
-                        /* display results, here will have button to go again */}
+                    </div>}
                 </div>}
             </CenterDiv>
         </Segment>
