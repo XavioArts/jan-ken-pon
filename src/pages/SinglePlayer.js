@@ -11,6 +11,8 @@ const SinglePlayer = () => {
     const [selection, setSelection] = useState(null);
     const [compChoice, setCompChoice] = useState(null);
     const [name, setName] = useState("");
+    const [winState, setWinState] = useState("");
+    const [calculating, setCalculating] = useState(false);
 
     const startGame = () => {
         let newPlayer = { name: name, wins: 0 }
@@ -44,31 +46,93 @@ const SinglePlayer = () => {
         } else if (id === 3) {
             setSelection("scissors");
         }
+        setCalculating(true);
     };
 
     const calculateWin = () => {
         let winner = "";
         let result = null;
+        console.log(selection);
+        console.log(compChoice);
         if (selection === compChoice) {
             result = "tie";
         } else {
             // handle wins and losses
+            if (selection === "rock" && compChoice === "scissors") {
+                result = "win";
+                winner = player.name;
+                player.wins++;
+            } else if (selection === "paper" && compChoice === "rock") {
+                result = "win";
+                winner = player.name;
+                player.wins++;
+            } else if (selection === "scissors" && compChoice === "paper") {
+                result = "win";
+                winner = player.name;
+                player.wins++;
+            } else {
+                result = "loss";
+                winner = computer.name;
+                computer.wins++;
+            }
         }
 
         if (result === "tie") {
-            return <h1>It's a tie!</h1>
+            // return <h1>It's a tie!</h1>
+            setWinState("It's a tie!");
         } else {
-            return (
-                <div>
-                    <h1>{winner} wins!</h1>
-                </div>
-            )
+            setWinState(`${winner} wins!`);
         }
     }
+
+    const calc = () => {
+        setCalculating(false);
+        return calculateWin();
+    }
+
+    // This is the original way i did it
+
+    // const calculateWin = () => {
+    //     let winner = "";
+    //     let result = null;
+    //     if (selection === compChoice) {
+    //         result = "tie";
+    //     } else {
+    //         // handle wins and losses
+    //         if (selection === "rock" && compChoice === "scissors") {
+    //             result = "win";
+    //             winner = player.name;
+    //             player.wins++;
+    //         } else if (selection === "paper" && compChoice === "rock") {
+    //             result = "win";
+    //             winner = player.name;
+    //             player.wins++;
+    //         } else if (selection === "scissors" && compChoice === "paper") {
+    //             result = "win";
+    //             winner = player.name;
+    //             player.wins++;
+    //         } else {
+    //             result = "loss";
+    //             winner = computer.name;
+    //             computer.wins++;
+    //         }
+    //     }
+
+    //     if (result === "tie") {
+    //         return <h1>It's a tie!</h1>
+    //     } else {
+    //         return (
+    //             <div>
+    //                 <h1>{winner} wins!</h1>
+    //             </div>
+    //         )
+    //     }
+    // }
 
     const reset = () => {
         setCompChoice(null);
         setSelection(null);
+        setWinState("");
     }
 
     return (
@@ -90,16 +154,17 @@ const SinglePlayer = () => {
                     <p>Start with the rock!</p>
                     <FlexDiv>
                         <Image src={rock} size="small" circular onClick={()=>makeChoice(1)} />
-                        <Image src={paper} size="small" circular />
-                        <Image src={scissors} size="small" circular />
+                        <Image src={paper} size="small" circular onClick={()=>makeChoice(2)} />
+                        <Image src={scissors} size="small" circular onClick={()=>makeChoice(3)} />
                     </FlexDiv> 
                     </>}
-                    {/* calculating/loading here */}
+                    {calculating && calc()}
                     {selection && compChoice && 
                     <div>
                         <h3>{player.name} - {selection}</h3>
                         <h3>{computer.name} - {compChoice}</h3>
-                        {calculateWin()}
+                        {/* {calculateWin()} */}
+                        <h1>{winState}</h1>
                         <Button onClick={reset}>Go again</Button>
                     </div>}
                 </div>}
