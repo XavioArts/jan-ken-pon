@@ -13,6 +13,7 @@ const SinglePlayer = () => {
     const [compChoice, setCompChoice] = useState(null);
     const [name, setName] = useState("");
     const [winState, setWinState] = useState("");
+    const [resultColor, setResultColor] = useState("");
     const [calculating, setCalculating] = useState(false);
 
     const startGame = () => {
@@ -54,6 +55,7 @@ const SinglePlayer = () => {
         setCompChoice(null);
         setSelection(null);
         setWinState("");
+        setResultColor("");
     }
 
     return (
@@ -79,13 +81,20 @@ const SinglePlayer = () => {
                         <Image src={scissors} size="small" circular onClick={()=>makeChoice(3)} />
                     </FlexDiv> 
                     </>}
-                    {calculating && <CalcWin selection={selection} compChoice={compChoice} player={player} computer={computer} setWinState={setWinState} setCalculating={setCalculating} />}
+                    {calculating && <CalcWin 
+                    selection={selection} 
+                    compChoice={compChoice} 
+                    player={player} 
+                    computer={computer} 
+                    setWinState={setWinState} 
+                    setCalculating={setCalculating}
+                    setResultColor={setResultColor} />}
                     {selection && compChoice && 
                     <div>
                         <h3>{player.name} - {selection}</h3>
                         <h3>{computer.name} - {compChoice}</h3>
                         {/* {calculateWin()} */}
-                        <h1>{winState}</h1>
+                        <h1 style={{color: `${resultColor}`}} >{winState}</h1>
                         <Button onClick={reset}>Go again</Button>
                     </div>}
                 </div>}

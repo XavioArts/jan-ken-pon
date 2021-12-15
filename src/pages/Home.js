@@ -11,7 +11,7 @@ const Home = () => {
             <h1>Play Single Player</h1>
             <Button onClick={()=>navigate("/single")} >Play</Button>
             <h1>Play Two Player</h1>
-            <Button></Button>
+            <Button>Play</Button>
         </Segment>
     );
 };

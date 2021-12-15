@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 const CalcWin = (props) => {
-    const {selection, compChoice, player, computer, setWinState, setCalculating} = props;
+    const {selection, compChoice, player, computer, setWinState, setCalculating, setResultColor} = props;
 
     const calculateWin = () => {
         let winner = "";
@@ -35,8 +35,14 @@ const CalcWin = (props) => {
         if (result === "tie") {
             // return <h1>It's a tie!</h1>
             setWinState("It's a tie!");
+            setResultColor("black");
         } else {
             setWinState(`${winner} wins!`);
+            if (result === "win") {
+                setResultColor("green");
+            } else {
+                setResultColor("red");
+            }
         }
         setCalculating(false);
     };
