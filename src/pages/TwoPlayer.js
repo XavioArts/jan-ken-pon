@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from "react";
-import { Button, Form, Image, Segment } from "semantic-ui-react";
+import { Button, Form, Icon, Image, Segment } from "semantic-ui-react";
 import CalcWinTwoPlayer from "../components/CalcWinTwoPlayer";
 import { CenterDiv, FlexDiv } from "../components/Styles";
 import paper from "../images/Paper.jpg";
@@ -16,6 +16,8 @@ const TwoPlayer = () => {
     const [winState, setWinState] = useState("");
     const [resultColor, setResultColor] = useState("");
     const [calculating, setCalculating] = useState(false);
+    
+    // const [winRatio, setWinRatio] = useState(0);
 
     const winReducer = (state, action) => {
         switch (action.type) {
@@ -55,11 +57,15 @@ const TwoPlayer = () => {
     };
 
     const calcRatios = () => {
-        let tieRatio = winTracker.ties / winTracker.total;
-        console.log(tieRatio);
-        console.log(winTracker.ties / winTracker.total)
-        let winRatio = winTracker.wins / winTracker.total;
-        let lossRatio = winTracker.losses / winTracker.total;
+        let winRatio;
+        let lossRatio;
+        if (winTracker.total === 0) {
+            winRatio = 0;
+            lossRatio = 0;
+        } else {
+            winRatio = winTracker.wins / winTracker.total;
+            lossRatio = winTracker.losses / winTracker.total;
+        }
         return (
             <div>
                 <p>P1 win ratio: {winRatio}</p>
@@ -71,15 +77,21 @@ const TwoPlayer = () => {
     const renderStatusBar = () => {
         return (
             <FlexDiv>
+                <FlexDiv>
+                    <Icon name="chess knight" color="blue" size="huge" />
                 <div>
                     <h2>{player.name}</h2>
                     <p>Wins: {player.wins}</p>
                 </div>
+                </FlexDiv>
                 {calcRatios()}
+                <FlexDiv>
                 <div>
                     <h2>{playerTwo.name}</h2>
                     <p>Wins: {playerTwo.wins}</p>
                 </div>
+                    <Icon name="chess rook" color="red" size="huge" />
+                </FlexDiv>
             </FlexDiv>
         );
     };
