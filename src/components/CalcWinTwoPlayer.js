@@ -50,7 +50,7 @@ const CalcWinTwoPlayer = (props) => {
             dispatch({type: result});
         };
         calculateWin();
-    }, []);
+    }, [props]);
 
     return (
         <Segment>

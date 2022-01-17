@@ -50,7 +50,7 @@ const CalcWin = (props) => {
             dispatch({type: result});
         };
         calculateWin();
-    }, []);
+    }, [props]);
 
     return (
         <Segment>
