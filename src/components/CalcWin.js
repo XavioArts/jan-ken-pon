@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { Dimmer, Loader, Segment } from "semantic-ui-react";
 
 const CalcWin = (props) => {
-    const {selection, compChoice, player, computer, setWinState, setCalculating, setResultColor, dispatch} = props;
-
+    
     
     useEffect(()=>{
+        const {selection, compChoice, player, computer, setWinState, setCalculating, setResultColor, dispatch} = props;
         const calculateWin = () => {
             let winner = "";
             let result = null;
